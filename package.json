@@ -6,7 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["react", "webpack", "typescript", "starter"],
+  "keywords": [
+    "react",
+    "webpack",
+    "typescript",
+    "starter"
+  ],
   "author": "Rony Purwita",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@types/react": "^15.0.34",
+    "@types/react-dom": "^15.5.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1"
+  }
 }
