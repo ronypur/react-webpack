@@ -1,0 +1,12 @@
+{
+  "name": "react-webpack",
+  "version": "1.0.0",
+  "description": "React basic starter using Typescript as compiler and Webpack as bundler",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["react", "webpack", "typescript", "starter"],
+  "author": "Rony Purwita",
+  "license": "ISC"
+}
