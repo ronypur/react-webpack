@@ -77,6 +77,12 @@ const rules = [
     enforce: "pre",
     test: /\.js$/,
     loader: "source-map-loader"
+  },
+
+  {
+    test: /\.css$/,
+    exclude: /node_modules/,
+    loaders: ['style-loader', 'css-loader'],
   }
 ];
 
