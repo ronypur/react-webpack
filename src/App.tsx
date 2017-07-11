@@ -44,8 +44,11 @@ export class App extends React.Component<any, any> {
     }
 
     private onDismiss(id: number) {
-        const updatedList = this.state.list.filter((item:any) => item.objectID !== id);
-        this.setState({ list: updatedList });
+        const isNotId = (item:any) => item.objectID !== id;
+        const updatedHits = this.state.result.hits.filter(isNotId);
+        this.setState({
+            result: { ...this.state.result, hits: updatedHits }
+        });
     }
 
     private onSearchChange(event: any) {
