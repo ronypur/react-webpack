@@ -6,19 +6,19 @@ const PATH_BASE = 'http://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
 
-interface ISearchProps {
+interface SearchProps {
     value: string;
     onChange: any;
     children: any;
 }
 
-interface ITableProps {
+interface TableProps {
     list: Array<any>;
     pattern: string;
     onDismiss: any;
 }
 
-interface IButtonProps {
+interface ButtonProps {
     onClick: any;
     className: string;
     children: any;
@@ -92,7 +92,7 @@ export class App extends React.Component<any, any> {
     }
 }
 
-function Search(props: ISearchProps) {
+function Search(props: SearchProps) {
     return (
         <form>
             {props.children} <input
@@ -104,7 +104,7 @@ function Search(props: ISearchProps) {
     );
 }
 
-function Table(props: ITableProps) {
+function Table(props: TableProps) {
     return (
         <div className="table">
             {props.list.filter(isSearched(props.pattern)).map((item:any) =>
@@ -135,7 +135,7 @@ function Table(props: ITableProps) {
     );
 }
 
-function Button(props: IButtonProps) {
+function Button(props: ButtonProps) {
     return (
         <button
             type="button"
