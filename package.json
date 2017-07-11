@@ -4,9 +4,9 @@
   "description": "React basic starter using Typescript as compiler and Webpack as bundler",
   "main": "index.tsx",
   "scripts": {
-    "start": "webpack-dev-server --env=development",
-    "start:prod": "webpack-dev-server --env=production",
-    "build": "webpack --env=production --config webpack.config.js --progress --profile --color",
+    "start": "cross-env NODE_ENV=development webpack-dev-server",
+    "start:prod": "cross-env NODE_ENV=production webpack-dev-server",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --profile --color",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
