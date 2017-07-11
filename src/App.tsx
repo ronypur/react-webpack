@@ -9,6 +9,7 @@ const PARAM_SEARCH = 'query=';
 interface SearchProps {
     value: string;
     onChange: any;
+    onSubmit: any;
     children: any;
 }
 
