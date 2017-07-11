@@ -80,8 +80,6 @@ export class App extends React.Component<any, any> {
     public render() {
         const { searchTerm, result } = this.state;
 
-        if (!result) { return null; }
-
         return (
             <div className="page">
                 <div className="interactions">
