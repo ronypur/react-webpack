@@ -118,7 +118,7 @@ function Search(props: SearchProps) {
 function Table(props: TableProps) {
     return (
         <div className="table">
-            {props.list.filter(isSearched(props.pattern)).map((item:any) =>
+            {props.list.map((item:any) =>
                 <div key={item.objectID} className="table-row">
                     <span style={{width: '40%'}}>
                         <a href={item.url}>{item.title}</a>
