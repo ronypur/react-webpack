@@ -7,10 +7,10 @@ const webpack = require('webpack');
 
 const parts = require('./webpack.parts');
 
-module.exports = (env) => {
+module.exports = () => {
   const entryDir = path.join(__dirname, 'src');
   const buildDir = path.join(__dirname, 'dist');
-  const isProd = env === 'production';
+  const isProd = process.env.NODE_ENV === 'production';
 
   return {
     entry: path.join(entryDir, 'index.tsx'),
