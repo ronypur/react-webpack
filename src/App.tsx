@@ -39,6 +39,7 @@ export class App extends React.Component<any, any> {
 
         this.onDismiss = this.onDismiss.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onSearchSubmit = this.onSearchSubmit.bind(this);
         this.setSearchTopStories = this.setSearchTopStories.bind(this);
         this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     }
@@ -53,6 +54,12 @@ export class App extends React.Component<any, any> {
 
     private onSearchChange(event: any) {
         this.setState({ searchTerm: event.target.value})
+    }
+
+    private onSearchSubmit(event: any) {
+        const { searchTerm } = this.state;
+        this.fetchSearchTopStories(searchTerm);
+        event.preventDefault();
     }
 
     private setSearchTopStories(result: any) {
@@ -81,6 +88,7 @@ export class App extends React.Component<any, any> {
                     <Search
                         value={searchTerm}
                         onChange={this.onSearchChange}
+                        onSubmit={this.onSearchSubmit}
                     >
                         Search
                     </Search>
@@ -97,12 +105,13 @@ export class App extends React.Component<any, any> {
 
 function Search(props: SearchProps) {
     return (
-        <form>
-            {props.children} <input
-            type="text"
-            value={props.value}
-            onChange={props.onChange}
-        />
+        <form onSubmit={props.onSubmit}>
+            <input
+                type="text"
+                value={props.value}
+                onChange={props.onChange}
+            />
+            <button type="submit">{props.children}</button>
         </form>
     );
 }
