@@ -14,7 +14,6 @@ interface SearchProps {
 
 interface TableProps {
     list: Array<any>;
-    pattern: string;
     onDismiss: any;
 }
 
