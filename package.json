@@ -27,6 +27,7 @@
   "devDependencies": {
     "@types/node": "^8.0.9",
     "awesome-typescript-loader": "^3.2.1",
+    "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
     "html-webpack-plugin": "^2.29.0",
     "source-map-loader": "^0.2.1",
