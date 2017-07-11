@@ -3,6 +3,7 @@
  */
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 /**
  * Plugins
@@ -31,17 +32,7 @@ exports.prodPlugins = () => {
     new webpack.DefinePlugin({
       PRODUCTION: JSON.stringify(true)
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      beautify: false,
-      mangle: {
-        screw_ie8: true,
-        keep_fnames: true
-      },
-      compress: {
-        screw_ie8: true
-      },
-      comments: false
-    }),
+    new UglifyJSPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html',
       minify: {
