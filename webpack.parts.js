@@ -8,7 +8,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
  * Plugins
  * @type {Array}
  */
-const commonPlugins = [];
+const commonPlugins = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+    }
+  }),
+];
 
 exports.devPlugins = () => {
   return [
