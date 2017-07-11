@@ -91,11 +91,12 @@ export class App extends React.Component<any, any> {
                         Search
                     </Search>
                 </div>
-                <Table
-                    list={result.hits}
-                    pattern={searchTerm}
-                    onDismiss={this.onDismiss}
-                />
+                { result &&
+                    <Table
+                        list={result.hits}
+                        onDismiss={this.onDismiss}
+                    />
+                }
             </div>
         );
     }
