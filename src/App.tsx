@@ -2,9 +2,13 @@ import * as React from "react";
 import './App.css';
 
 const DEFAULT_QUERY = 'redux';
+const DEFAULT_PAGE = 0;
+const DEFAULT_HPP = '50'; // Hits Per Page
 const PATH_BASE = 'http://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
 const PARAM_SEARCH = 'query=';
+const PARAM_PAGE = 'page=';
+const PARAM_HPP = 'hitsPerPage=';
 
 interface SearchProps {
     value: string;
@@ -20,7 +24,7 @@ interface TableProps {
 
 interface ButtonProps {
     onClick: any;
-    className: string;
+    className?: string;
     children: any;
 }
 
@@ -58,27 +62,36 @@ export class App extends React.Component<any, any> {
 
     private onSearchSubmit(event: any) {
         const { searchTerm } = this.state;
-        this.fetchSearchTopStories(searchTerm);
+        this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
         event.preventDefault();
     }
 
     private setSearchTopStories(result: any) {
-        this.setState({result});
+        const { hits, page } = result;
+
+        const oldHits = page != 0 ? this.state.result.hits : [];
+
+        const updateHits = [...oldHits, ...hits];
+
+        this.setState({
+            result: { hits: updateHits, page }
+        });
     }
 
-    private fetchSearchTopStories(searchTerm: string) {
-        fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+    private fetchSearchTopStories(searchTerm: string, page: number) {
+        fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
             .then(response => response.json())
             .then(result => this.setSearchTopStories(result));
     }
 
     componentDidMount() {
         const { searchTerm } = this.state;
-        this.fetchSearchTopStories(searchTerm);
+        this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
     }
 
     public render() {
         const { searchTerm, result } = this.state;
+        const page = (result && result.page) || 0;
 
         return (
             <div className="page">
@@ -97,6 +110,13 @@ export class App extends React.Component<any, any> {
                         onDismiss={this.onDismiss}
                     />
                 }
+                <div className="interactions">
+                    <Button
+                        onClick={() => this.fetchSearchTopStories(searchTerm, page + 1)}
+                    >
+                        More
+                    </Button>
+                </div>
             </div>
         );
     }
