@@ -28,10 +28,6 @@ interface ButtonProps {
     children: any;
 }
 
-function isSearched(searchTerm: string): any {
-    return (item: any) => !searchTerm || item.title.toLowerCase().includes(searchTerm.toLowerCase());
-}
-
 export class App extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
@@ -61,7 +57,7 @@ export class App extends React.Component<any, any> {
         const updatedHits = hits.filter(isNotId);
         this.setState({
             results: {
-                ...results, [searchKey]: { hits: updatedHits }
+                ...results, [searchKey]: { hits: updatedHits, page }
             }
         });
     }
@@ -146,7 +142,7 @@ export class App extends React.Component<any, any> {
     }
 }
 
-function Search(props: SearchProps) {
+export const Search = (props: SearchProps) => {
     return (
         <form onSubmit={props.onSubmit}>
             <input
@@ -157,9 +153,9 @@ function Search(props: SearchProps) {
             <button type="submit">{props.children}</button>
         </form>
     );
-}
+};
 
-function Table(props: TableProps) {
+export const Table = (props: TableProps) => {
     return (
         <div className="table">
             {props.list.map((item:any) =>
@@ -188,9 +184,9 @@ function Table(props: TableProps) {
             )}
         </div>
     );
-}
+};
 
-function Button(props: ButtonProps) {
+export const Button = (props: ButtonProps) => {
     return (
         <button
             type="button"
@@ -200,4 +196,4 @@ function Button(props: ButtonProps) {
             {props.children}
         </button>
     );
-}
+};
