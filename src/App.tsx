@@ -13,10 +13,10 @@ const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
 
 interface SearchProps {
-    value: string;
-    onChange: any;
-    onSubmit: any;
-    children: any;
+    value?: string;
+    onChange?: any;
+    onSubmit?: any;
+    children?: string;
 }
 
 interface TableProps {
@@ -27,7 +27,7 @@ interface TableProps {
 interface ButtonProps {
     onClick?: any;
     className?: string;
-    children?: any;
+    children?: string;
 }
 
 export class App extends React.Component<any, any> {
