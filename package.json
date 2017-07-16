@@ -28,6 +28,7 @@
     "uglify-js": "^3.0.24"
   },
   "devDependencies": {
+    "@types/enzyme": "^2.8.2",
     "@types/isomorphic-fetch": "0.0.34",
     "@types/jest": "^20.0.2",
     "@types/node": "^8.0.9",
