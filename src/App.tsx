@@ -21,7 +21,7 @@ interface SearchProps {
 
 interface TableProps {
     list: any[];
-    onDismiss: any;
+    onDismiss?: any;
 }
 
 interface ButtonProps {
