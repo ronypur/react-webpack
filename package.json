@@ -8,7 +8,7 @@
     "start:prod": "cross-env NODE_ENV=production webpack-dev-server",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.js --progress --profile --color",
     "test": "jest",
-    "test:updateSnapshot" : "jest --updateSnapshot",
+    "test:updateSnapshot": "jest --updateSnapshot",
     "tslint": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "tslint-init": "tslint --init"
   },
@@ -35,9 +35,11 @@
     "awesome-typescript-loader": "^3.2.1",
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.4",
+    "enzyme": "^2.9.1",
     "html-webpack-plugin": "^2.29.0",
     "isomorphic-fetch": "^2.2.1",
     "jest": "^20.0.4",
+    "react-addons-test-utils": "^15.6.0",
     "react-test-renderer": "^15.6.1",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.18.2",
@@ -60,7 +62,7 @@
     "transform": {
       "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
-    "testRegex": "(\/src\/)*.(test|spec).(ts|tsx)$",
+    "testRegex": "(/src/)*.(test|spec).(ts|tsx)$",
     "moduleNameMapper": {
       "\\.(css|less|scss)$": "<rootDir>/src/__mocks__/styleMock.js"
     }
