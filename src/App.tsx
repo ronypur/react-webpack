@@ -1,14 +1,16 @@
+import * as fetch from "isomorphic-fetch";
 import * as React from "react";
-import './App.css';
 
-const DEFAULT_QUERY = 'redux';
+import "./App.css";
+
+const DEFAULT_QUERY = "redux";
 const DEFAULT_PAGE = 0;
-const DEFAULT_HPP = '10'; // Hits Per Page
-const PATH_BASE = 'http://hn.algolia.com/api/v1';
-const PATH_SEARCH = '/search';
-const PARAM_SEARCH = 'query=';
-const PARAM_PAGE = 'page=';
-const PARAM_HPP = 'hitsPerPage=';
+const DEFAULT_HPP = "10"; // Hits Per Page
+const PATH_BASE = "http://hn.algolia.com/api/v1";
+const PATH_SEARCH = "/search";
+const PARAM_SEARCH = "query=";
+const PARAM_PAGE = "page=";
+const PARAM_HPP = "hitsPerPage=";
 
 interface SearchProps {
     value: string;
@@ -18,14 +20,14 @@ interface SearchProps {
 }
 
 interface TableProps {
-    list: Array<any>;
+    list: any[];
     onDismiss: any;
 }
 
 interface ButtonProps {
-    onClick: any;
+    onClick?: any;
     className?: string;
-    children: any;
+    children?: any;
 }
 
 export class App extends React.Component<any, any> {
@@ -34,7 +36,7 @@ export class App extends React.Component<any, any> {
 
         this.state = {
             results: null,
-            searchKey: '',
+            searchKey: "",
             searchTerm: DEFAULT_QUERY,
         };
 
@@ -46,57 +48,7 @@ export class App extends React.Component<any, any> {
         this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     }
 
-    private needSearchTopStories(searchTerm: string) {
-        return !this.state.results[searchTerm];
-    }
-
-    private onDismiss(id: number) {
-        const { searchKey, results } = this.state;
-        const { hits, page } = results[searchKey];
-        const isNotId = (item:any) => item.objectID !== id;
-        const updatedHits = hits.filter(isNotId);
-        this.setState({
-            results: {
-                ...results, [searchKey]: { hits: updatedHits, page }
-            }
-        });
-    }
-
-    private onSearchChange(event: any) {
-        this.setState({ searchTerm: event.target.value})
-    }
-
-    private onSearchSubmit(event: any) {
-        const { searchTerm } = this.state;
-        this.setState({ searchKey: searchTerm });
-
-        if (this.needSearchTopStories(searchTerm)) {
-            this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
-        }
-
-        event.preventDefault();
-    }
-
-    private setSearchTopStories(result: any) {
-        const { hits, page } = result;
-        const { searchKey, results } = this.state;
-
-        const oldHits = results && results[searchKey] ? results[searchKey].hits : [];
-
-        const updateHits = [...oldHits, ...hits];
-
-        this.setState({
-            results: { ...results, [searchKey]: { hits: updateHits, page } }
-        });
-    }
-
-    private fetchSearchTopStories(searchTerm: string, page: number) {
-        fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
-            .then(response => response.json())
-            .then(result => this.setSearchTopStories(result));
-    }
-
-    componentDidMount() {
+    public componentDidMount() {
         const { searchTerm } = this.state;
         this.setState({ searchKey: searchTerm });
         this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
@@ -105,15 +57,15 @@ export class App extends React.Component<any, any> {
     public render() {
         const { searchTerm, results, searchKey } = this.state;
         const page = (
-            results &&
-            results[searchKey] &&
-            results[searchKey].page
-        ) || 0;
-        const list =(
-            results &&
-            results[searchKey] &&
-            results[searchKey].hits
-        ) || [];
+                results &&
+                results[searchKey] &&
+                results[searchKey].page
+            ) || 0;
+        const list = (
+                results &&
+                results[searchKey] &&
+                results[searchKey].hits
+            ) || [];
 
         return (
             <div className="page">
@@ -140,6 +92,56 @@ export class App extends React.Component<any, any> {
             </div>
         );
     }
+
+    private needSearchTopStories(searchTerm: string) {
+        return !this.state.results[searchTerm];
+    }
+
+    private onDismiss(id: number) {
+        const { searchKey, results } = this.state;
+        const { hits, page } = results[searchKey];
+        const isNotId = (item: any) => item.objectID !== id;
+        const updatedHits = hits.filter(isNotId);
+        this.setState({
+            results: {
+                ...results, [searchKey]: { hits: updatedHits, page },
+            },
+        });
+    }
+
+    private onSearchChange(event: any) {
+        this.setState({ searchTerm: event.target.value});
+    }
+
+    private onSearchSubmit(event: any) {
+        const { searchTerm } = this.state;
+        this.setState({ searchKey: searchTerm });
+
+        if (this.needSearchTopStories(searchTerm)) {
+            this.fetchSearchTopStories(searchTerm, DEFAULT_PAGE);
+        }
+
+        event.preventDefault();
+    }
+
+    private setSearchTopStories(result: any) {
+        const { hits, page } = result;
+        const { searchKey, results } = this.state;
+
+        const oldHits = results && results[searchKey] ? results[searchKey].hits : [];
+
+        const updateHits = [...oldHits, ...hits];
+
+        this.setState({
+            results: { ...results, [searchKey]: { hits: updateHits, page } },
+        });
+    }
+
+    private fetchSearchTopStories(searchTerm: string, page: number) {
+        fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
+            .then((response) => response.json())
+            .then((result) => this.setSearchTopStories(result));
+    }
 }
 
 export const Search = (props: SearchProps) => {
@@ -158,21 +160,21 @@ export const Search = (props: SearchProps) => {
 export const Table = (props: TableProps) => {
     return (
         <div className="table">
-            {props.list.map((item:any) =>
+            {props.list.map((item: any) =>
                 <div key={item.objectID} className="table-row">
-                    <span style={{width: '40%'}}>
+                    <span style={{width: "40%"}}>
                         <a href={item.url}>{item.title}</a>
                     </span>
-                    <span style={{width: '30%'}}>
+                    <span style={{width: "30%"}}>
                         {item.author}
                     </span>
-                    <span style={{width: '10%'}}>
+                    <span style={{width: "10%"}}>
                         {item.num_comments}
                     </span>
-                    <span style={{width: '10%'}}>
+                    <span style={{width: "10%"}}>
                         {item.points}
                     </span>
-                    <span style={{width: '10%'}}>
+                    <span style={{width: "10%"}}>
                         <Button
                             onClick={() => props.onDismiss(item.objectID)}
                             className="button-inline"
@@ -180,7 +182,7 @@ export const Table = (props: TableProps) => {
                             Dismiss
                         </Button>
                     </span>
-                </div>
+                </div>,
             )}
         </div>
     );
