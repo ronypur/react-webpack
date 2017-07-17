@@ -28,13 +28,9 @@ exports[`App snapshots 1`] = `
   <div
     className="interactions"
   >
-    <button
-      className={undefined}
-      onClick={[Function]}
-      type="button"
-    >
-      More
-    </button>
+    <div>
+      Loading...
+    </div>
   </div>
 </div>
 `;
