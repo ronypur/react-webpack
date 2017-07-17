@@ -2,6 +2,7 @@ import { shallow } from "enzyme";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import * as renderer from "react-test-renderer";
+import * as sinon from "sinon";
 
 import { App, Button, Search, Table } from "./App";
 
@@ -30,6 +31,13 @@ describe("Button", () => {
         );
         const tree = component.toJSON();
         expect(tree).toMatchSnapshot();
+    });
+
+    it("simulates click event", () => {
+        const onButtonClick = sinon.spy();
+        const wrapper = shallow(<Button onClick={ onButtonClick }>Click!</Button>);
+        wrapper.find("button").simulate("click");
+        expect(onButtonClick.calledOnce).toEqual(true);
     });
 });
 
