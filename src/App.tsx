@@ -12,6 +12,12 @@ const PARAM_SEARCH = "query=";
 const PARAM_PAGE = "page=";
 const PARAM_HPP = "hitsPerPage=";
 
+interface ButtonProps {
+    onClick?: any;
+    className?: string;
+    children?: string;
+}
+
 interface SearchProps {
     value?: string;
     onChange?: any;
@@ -24,10 +30,8 @@ interface TableProps {
     onDismiss?: any;
 }
 
-interface ButtonProps {
-    onClick?: any;
-    className?: string;
-    children?: string;
+interface WithLoadingProps {
+    isLoading?: boolean;
 }
 
 export class App extends React.Component<any, any> {
@@ -89,14 +93,12 @@ export class App extends React.Component<any, any> {
                     onDismiss={this.onDismiss}
                 />
                 <div className="interactions">
-                    { isLoading
-                        ? <Loading/>
-                        : <Button
-                            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
-                          >
-                            More
-                          </Button>
-                    }
+                    <ButtonWithLoading
+                        isLoading={isLoading}
+                        onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
+                    >
+                        More
+                    </ButtonWithLoading>
                 </div>
             </div>
         );
@@ -156,6 +158,12 @@ export class App extends React.Component<any, any> {
     }
 }
 
+export const withLoading = (Component: any) => {
+    return ({ isLoading, ...rest }: WithLoadingProps): any => {
+        return isLoading ? <Loading /> : <Component { ...rest }/>;
+    };
+};
+
 export const Button = (props: ButtonProps) => {
     return (
         <button
@@ -167,6 +175,8 @@ export const Button = (props: ButtonProps) => {
         </button>
     );
 };
+
+export const ButtonWithLoading = withLoading(Button);
 
 export const Loading = () => {
     return (<div>Loading...</div>);
