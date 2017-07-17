@@ -35,6 +35,7 @@ export class App extends React.Component<any, any> {
         super(props);
 
         this.state = {
+            isLoading: false,
             results: null,
             searchKey: "",
             searchTerm: DEFAULT_QUERY,
@@ -55,7 +56,12 @@ export class App extends React.Component<any, any> {
     }
 
     public render() {
-        const { searchTerm, results, searchKey } = this.state;
+        const {
+            isLoading,
+            results,
+            searchKey,
+            searchTerm,
+        } = this.state;
         const page = (
                 results &&
                 results[searchKey] &&
@@ -83,11 +89,14 @@ export class App extends React.Component<any, any> {
                     onDismiss={this.onDismiss}
                 />
                 <div className="interactions">
-                    <Button
-                        onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
-                    >
-                        More
-                    </Button>
+                    { isLoading
+                        ? <Loading/>
+                        : <Button
+                            onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}
+                          >
+                            More
+                          </Button>
+                    }
                 </div>
             </div>
         );
@@ -133,16 +142,35 @@ export class App extends React.Component<any, any> {
         const updateHits = [...oldHits, ...hits];
 
         this.setState({
+            isLoading: false,
             results: { ...results, [searchKey]: { hits: updateHits, page } },
         });
     }
 
     private fetchSearchTopStories(searchTerm: string, page: number) {
+        this.setState({ isLoading: true });
+
         fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`)
             .then((response) => response.json())
             .then((result) => this.setSearchTopStories(result));
     }
 }
+
+export const Button = (props: ButtonProps) => {
+    return (
+        <button
+            type="button"
+            onClick={props.onClick}
+            className={props.className}
+        >
+            {props.children}
+        </button>
+    );
+};
+
+export const Loading = () => {
+    return (<div>Loading...</div>);
+};
 
 export const Search = (props: SearchProps) => {
     return (
@@ -185,17 +213,5 @@ export const Table = (props: TableProps) => {
                 </div>,
             )}
         </div>
-    );
-};
-
-export const Button = (props: ButtonProps) => {
-    return (
-        <button
-            type="button"
-            onClick={props.onClick}
-            className={props.className}
-        >
-            {props.children}
-        </button>
     );
 };
