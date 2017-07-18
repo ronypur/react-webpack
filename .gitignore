@@ -29,7 +29,7 @@ node_modules
 
 # IDE
 \.idea/
-.vscode/tasks.json
+.vscode/
 
 # Distributed directory
 /dist/
