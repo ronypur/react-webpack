@@ -79,7 +79,11 @@ const rules = [
   {
     test: /\.css$/,
     exclude: /node_modules/,
-    loaders: ['style-loader', 'css-loader'],
+    use: [
+      'style-loader',
+      { loader: 'css-loader', options: { importLoaders: 1 }},
+      'postcss-loader'
+    ],
   }
 ];
 
