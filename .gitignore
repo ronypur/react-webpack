@@ -29,6 +29,8 @@ node_modules
 
 # IDE
 \.idea/
+.vscode/tasks.json
 
 # Distributed directory
 /dist/
+
